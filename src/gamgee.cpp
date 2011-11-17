@@ -1,5 +1,5 @@
 /**
- * Gamgee - Hummingbirds faithful companion!
+ * Gamgee - Hummingbird's faithful companion!
  *
  * Currently reads a byte stream off the serial port and splits it into frames based upon the CCSDS ASM
  * standard.
@@ -7,7 +7,8 @@
  * @author Mark Doyle
  */
 #include <WProgram.h>
-#include <arduino.h>
+#include "arduino.h"
+#include "CcsdsPacketDecoder.h"
 
 // ASM marker byte array
 const byte ASM_MARKER[] = { 0x1A & 0xFF, 0xCF & 0xFF, 0xFC & 0xFF, 0x1D & 0xFF };
@@ -68,7 +69,8 @@ void blinkLed(int count) {
 	for (int i = 0; i < count; i++) {
 		if (ledState == LOW) {
 			ledState = HIGH;
-		} else {
+		}
+		else {
 			ledState = LOW;
 		}
 		// set the LED with the ledState of the variable:
@@ -79,7 +81,8 @@ void blinkLed(int count) {
 void switchLed(boolean on) {
 	if (on) {
 		ledState = LOW;
-	} else {
+	}
+	else {
 		ledState = HIGH;
 	}
 	// set the LED with the ledState of the variable:
@@ -94,6 +97,7 @@ void clearByteArray(byte byteArray[], int arraySize) {
 }
 
 void setup() {
+
 	clearByteArray(receivedFrame, MAX_FRAME);
 	clearByteArray(newData, READ_BUFFER);
 
@@ -114,7 +118,8 @@ void loop() {
 		for (int i = 0; i < READ_BUFFER; i++) {
 			if ((newData[i] = Serial.read()) == -1) {
 				break;
-			} else {
+			}
+			else {
 				newDataRead++;
 			}
 		}
@@ -142,7 +147,8 @@ void loop() {
 					receivedNumBytes = 0;
 					clearByteArray(receivedFrame, MAX_FRAME);
 				}
-			} else {
+			}
+			else {
 				// Received byte not part of the ASM. Reset current asm byte "pointer" and continue processing the stream.
 				receivedFrame[receivedNumBytes++] = newData[i];
 				asmByteMarker = 0;
