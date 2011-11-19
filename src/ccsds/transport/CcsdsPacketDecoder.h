@@ -10,6 +10,8 @@
 
 #include <WProgram.h>
 
+namespace transport {
+
 class CcsdsPacketDecoder {
 public:
 	CcsdsPacketDecoder();
@@ -20,4 +22,5 @@ public:
 	}
 };
 
+}
 #endif /* CCSDSPACKETDECODER_H_ */
