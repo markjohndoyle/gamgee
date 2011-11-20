@@ -15,16 +15,16 @@ const char CcsdsAsmSyncer::ASM_SIZE;
 CcsdsAsmSyncer::CcsdsAsmSyncer() : asmByteMarker(0), receivedNumBytes(0) {
 	asmMarker[0] = 0x1A & 0xFF;
 		Serial.print("ASM[0] = ");
-		Serial.print(asmMarker[0], BIN);
+		Serial.print(asmMarker[0], HEX);
 	asmMarker[1] = 0xCF & 0xFF;
 		Serial.print("ASM[1] = ");
-		Serial.print(asmMarker[1], BIN);
+		Serial.print(asmMarker[1], HEX);
 	asmMarker[2] = 0xFC & 0xFF;
 		Serial.print("ASM[2] = ");
-		Serial.print(asmMarker[2], BIN);
+		Serial.print(asmMarker[2], HEX);
 	asmMarker[3] = 0x1D & 0xFF;
 		Serial.print("ASM[3] = ");
-		Serial.print(asmMarker[3], BIN);
+		Serial.print(asmMarker[3], HEX);
 }
 
 CcsdsAsmSyncer::~CcsdsAsmSyncer() {
@@ -34,9 +34,9 @@ CcsdsAsmSyncer::~CcsdsAsmSyncer() {
 void CcsdsAsmSyncer::processByte(byte inByte) {
 	// If the byte corresponds to the current ASM marker byte...
 	Serial.print("byte = ");
-	Serial.println(inByte, BIN);
+	Serial.println(inByte, HEX);
 	Serial.print("asm = ");
-	Serial.println(asmMarker[asmByteMarker], BIN);
+	Serial.println(asmMarker[asmByteMarker], HEX);
 
 	if (inByte == asmMarker[asmByteMarker]) {
 		// increment the ASM byte we are checking next
@@ -46,7 +46,6 @@ void CcsdsAsmSyncer::processByte(byte inByte) {
 		if (asmByteMarker == ASM_SIZE) {
 			Serial.println("ASM marker detected, sending Framebuffer minus ASM size");
 			// send received buffer
-//			sendFrameBuffer(receivedNumBytes);
 			this->frameClientListener->receiveCompleteFrame(receivedFrame, receivedNumBytes);
 
 			// reset the asmByte and receivedFrameBuffer for the next iteration
@@ -64,7 +63,7 @@ void CcsdsAsmSyncer::processByte(byte inByte) {
 
 }
 
-void CcsdsAsmSyncer::sendFrameBuffer(int numBytes) {
+void CcsdsAsmSyncer::dumpFrameBufferToSerial(int numBytes) {
 	String numBytesToSend = (String) numBytes;
 	Serial.println("Sending " + numBytesToSend + " frame bytes");
 	for (int i = 0; i < numBytes; i++) {

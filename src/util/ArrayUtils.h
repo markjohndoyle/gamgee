@@ -14,12 +14,13 @@ namespace util {
 
 class ArrayUtils {
 
-private:
-	ArrayUtils();
-	virtual ~ArrayUtils();
+	private:
+		ArrayUtils();
+		virtual ~ArrayUtils();
 
-public:
-	static void clearByteArray(byte byteArray[], int arraySize);
+	public:
+		static void clearByteArray(byte byteArray[], int arraySize);
+		static void newByteArray(const byte payload[], const int payloadOffset, const int payloadLength, byte target[]);
 };
 
 } /* namespace util */

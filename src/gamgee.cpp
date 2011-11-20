@@ -51,7 +51,8 @@ void setup() {
 	Serial.flush();
 }
 
-transport::CcsdsStreamToPacketProcessor proc;
+static const int FRAME_SIZE = 30;
+transport::CcsdsStreamToPacketProcessor proc(FRAME_SIZE);
 
 void loop() {
 	// Buffering removed for now.

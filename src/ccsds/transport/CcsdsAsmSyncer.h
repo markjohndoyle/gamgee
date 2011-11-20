@@ -46,7 +46,7 @@ private:
 
 	int receivedNumBytes;
 
-	void sendFrameBuffer(int numBytes);
+	void dumpFrameBufferToSerial(int numBytes);
 
 };
 

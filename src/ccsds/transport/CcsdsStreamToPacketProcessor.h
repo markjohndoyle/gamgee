@@ -17,7 +17,7 @@ namespace transport {
 class CcsdsStreamToPacketProcessor : public FrameListener {
 
 public:
-	CcsdsStreamToPacketProcessor();
+	CcsdsStreamToPacketProcessor(int frameLength);
 	virtual ~CcsdsStreamToPacketProcessor();
 
 	void processByte(byte b);
@@ -25,7 +25,7 @@ public:
 
 private:
 	CcsdsAsmSyncer syncer;
-	CcsdsFrameDecoder frameDecoder;
+	CcsdsFrameDecoder* frameDecoder;
 
 };
 

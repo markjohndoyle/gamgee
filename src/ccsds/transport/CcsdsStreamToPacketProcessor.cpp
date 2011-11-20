@@ -9,7 +9,7 @@
 
 namespace transport {
 
-CcsdsStreamToPacketProcessor::CcsdsStreamToPacketProcessor() {
+CcsdsStreamToPacketProcessor::CcsdsStreamToPacketProcessor(int frameLength) : frameDecoder(new CcsdsFrameDecoder(frameLength)) {
 	this->syncer.regsiterForFrameOnCompletion(this);
 }
 
@@ -22,9 +22,7 @@ void CcsdsStreamToPacketProcessor::processByte(byte b) {
 }
 
 void CcsdsStreamToPacketProcessor::receiveCompleteFrame(byte frame[], int sizeOfFrame) {
-	for(int i = 0; i < sizeOfFrame; i++) {
-		Serial.println(frame[i]);
-	}
+	this->frameDecoder->decode(frame, sizeOfFrame);
 }
 
 }
