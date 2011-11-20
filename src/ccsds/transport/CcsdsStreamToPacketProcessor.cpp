@@ -22,7 +22,15 @@ void CcsdsStreamToPacketProcessor::processByte(byte b) {
 }
 
 void CcsdsStreamToPacketProcessor::receiveCompleteFrame(byte frame[], int sizeOfFrame) {
-	this->frameDecoder->decode(frame, sizeOfFrame);
+	const model::CcsdsFrame* decodedFrame = this->frameDecoder->decode(frame, sizeOfFrame);
+	if(decodedFrame != NULL) {
+		String frameSize = (String)decodedFrame->frameSize;
+		Serial.println("Decoded frame size = " + frameSize);
+		decodedFrame->dumpFrame();
+	}
+	else {
+		Serial.println("Frame was null");
+	}
 }
 
 }

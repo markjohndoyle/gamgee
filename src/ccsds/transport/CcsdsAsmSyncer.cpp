@@ -14,17 +14,9 @@ const char CcsdsAsmSyncer::ASM_SIZE;
 
 CcsdsAsmSyncer::CcsdsAsmSyncer() : asmByteMarker(0), receivedNumBytes(0) {
 	asmMarker[0] = 0x1A & 0xFF;
-		Serial.print("ASM[0] = ");
-		Serial.print(asmMarker[0], HEX);
 	asmMarker[1] = 0xCF & 0xFF;
-		Serial.print("ASM[1] = ");
-		Serial.print(asmMarker[1], HEX);
 	asmMarker[2] = 0xFC & 0xFF;
-		Serial.print("ASM[2] = ");
-		Serial.print(asmMarker[2], HEX);
 	asmMarker[3] = 0x1D & 0xFF;
-		Serial.print("ASM[3] = ");
-		Serial.print(asmMarker[3], HEX);
 }
 
 CcsdsAsmSyncer::~CcsdsAsmSyncer() {

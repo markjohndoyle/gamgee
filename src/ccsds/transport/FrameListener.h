@@ -15,8 +15,8 @@ namespace transport {
 
 class FrameListener {
 public:
-	FrameListener();
-	virtual ~FrameListener();
+	FrameListener(){};
+	virtual ~FrameListener(){};
 
 	virtual void receiveCompleteFrame(byte frame[], int sizeOfFrame) = 0;
 

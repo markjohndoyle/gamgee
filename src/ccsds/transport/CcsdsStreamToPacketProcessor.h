@@ -8,8 +8,9 @@
 #ifndef CCSDSSTREAMTOPACKETPROCESSOR_H_
 #define CCSDSSTREAMTOPACKETPROCESSOR_H_
 
-#include "CcsdsAsmSyncer.h"
-#include "CcsdsFrameDecoder.h"
+#include <CcsdsAsmSyncer.h>
+#include <CcsdsFrameDecoder.h>
+#include <CcsdsFrame.h>
 
 namespace transport {
 

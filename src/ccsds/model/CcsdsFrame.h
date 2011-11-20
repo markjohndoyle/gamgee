@@ -14,14 +14,18 @@ namespace model {
 
 class CcsdsFrame {
 	public:
-		CcsdsFrame(const int spacecraftId, const int virtualChannelId, const byte payload[], const int payloadSize, const boolean isNextFrame, const long timeStamp);
-		virtual ~CcsdsFrame();
-
-		int spacecraftId;
-		int virtualChannelId;
+		const int spacecraftId;
+		const int virtualChannelId;
 		byte payload[];
 		boolean isNextFrame;
 		long timeStamp;
+		const int frameSize;
+
+		CcsdsFrame(const int spacecraftId, const int virtualChannelId, const byte payload[], const int payloadSize, const boolean isNextFrame, const long timeStamp);
+		virtual ~CcsdsFrame();
+
+		void dumpFrame() const;
+
 };
 
 } /* namespace model */
