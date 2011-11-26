@@ -24,6 +24,7 @@ void ArrayUtils::clearByteArray(byte byteArray[], int arraySize) {
 	}
 }
 
+
 void ArrayUtils::newByteArray(const byte payload[], const int payloadOffset, const int payloadLength, byte target[]) {
 	for(int i = payloadOffset; i < payloadLength; i++) {
 		target[i] = payload[i];
