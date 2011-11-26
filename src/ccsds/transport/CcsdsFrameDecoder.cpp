@@ -19,8 +19,19 @@ const String CcsdsFrameDecoder::VIRTUAL_CHANNEL_ID = "VirtualChannelId";
 
 using namespace model;
 
-CcsdsFrameDecoder::CcsdsFrameDecoder(const int frameLength, const boolean ocfPresent, const boolean ecfPresent) : frameLengthInOctets(frameLength),
-		payloadEnd(frameLength), OCF_PRESENT(ocfPresent), ECF_PRESENT(ecfPresent) {
+CcsdsFrameDecoder::CcsdsFrameDecoder(const int frameLength, const boolean ocfPresent, const boolean ecfPresent) :
+		frameLengthInOctets(frameLength), payloadEnd(frameLength), OCF_PRESENT(ocfPresent), ECF_PRESENT(ecfPresent) {
+
+	if (ECF_PRESENT) {
+		payloadEnd = payloadEnd - ECF_LENGTH;
+		ECF_START = payloadEnd;
+	}
+
+	if (OCF_PRESENT) {
+		payloadEnd = payloadEnd - OCF_LENGTH;
+		OCF_START = payloadEnd;
+	}
+
 	// Create 8 VirtualChannels, accessed using their array index.
 	for (int i = 0; i < 8; i++) {
 		this->virtualChannels[i] = VirtualChannel(i);
@@ -128,7 +139,8 @@ const model::CcsdsFrame* CcsdsFrameDecoder::decode(byte frame[], const int frame
 	byte payload[payloadEnd - payloadOffset];
 	util::ArrayUtils::newByteArray(frame, payloadOffset, payloadEnd, payload);
 
-	return virtualChannels[virtualChannelId].processPayload(spacecraftId, payload, payloadEnd - payloadOffset, virtualChannelFrameCount, firstHeaderPointer);
+	return virtualChannels[virtualChannelId].processPayload(spacecraftId, payload, payloadEnd - payloadOffset,
+			virtualChannelFrameCount, firstHeaderPointer);
 
 }
 

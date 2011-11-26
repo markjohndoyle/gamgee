@@ -41,13 +41,14 @@ class CcsdsFrameDecoder {
 		 */
 		const boolean OCF_PRESENT;
 
+		static const int OCF_LENGTH = 4;
+
 		int OCF_START;
 
-		static const int OCF_LENGTH = 4;
+		static const int ECF_LENGTH = 2;
 
 		int ECF_START;
 
-		static const int ECF_LENGTH = 2;
 
 		/*
 		 * Signifies whether the Error Control Field (2 octets) is present
