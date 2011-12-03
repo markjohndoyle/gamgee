@@ -32,14 +32,14 @@ void CcsdsStreamToPacketProcessor::receiveCompleteFrame(byte frame[], int sizeOf
 	util::ArrayUtils::dumpArray(frame, 0, sizeOfFrame, util::ArrayUtils::BASE_HEX);
 
 	const model::CcsdsFrame decodedFrame = frameDecoder->decode(frame, sizeOfFrame);
-	util::ArrayUtils::dumpArray(decodedFrame.packet, 0, sizeOfFrame, util::ArrayUtils::BASE_HEX);
 
 	if(decodedFrame.spacecraftId != -1) {
-		String frameSize = (String)decodedFrame.frameSize;
-		Serial.println("Decoded frame size = " + frameSize);
+		String packetSizeStr = (String)decodedFrame.packetSize;
+		Serial.println("Decoded packet size = " + packetSizeStr);
+		util::ArrayUtils::dumpArray(decodedFrame.packet, 0, decodedFrame.packetSize, util::ArrayUtils::BASE_HEX);
 	}
 	else {
-		Serial.println("Frame was null");
+		Serial.println("Frame was invalid - spacecraft id = -1");
 	}
 
 	decoding = false;

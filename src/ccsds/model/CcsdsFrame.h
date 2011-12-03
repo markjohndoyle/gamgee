@@ -19,9 +19,9 @@ class CcsdsFrame {
 		byte packet[];
 		boolean isNextFrame;
 		long timeStamp;
-		const int frameSize;
+		const int packetSize;
 
-		CcsdsFrame(const int spacecraftIdIn = -1 , const int virtualChannelIdIn = 0, const byte payloadIn[] = 0, const int payloadSizeIn = 0, const boolean isNextFrameIn = false, const long timeStampIn = 0);
+		CcsdsFrame(const int spacecraftIdIn = -1 , const int virtualChannelIdIn = 0, const byte packetIn[] = 0, const int packetSizeIn = 0, const boolean isNextFrameIn = false, const long timeStampIn = 0);
 		virtual ~CcsdsFrame();
 };
 
