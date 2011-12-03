@@ -38,7 +38,7 @@ void CcsdsAsmSyncer::processByte(byte inByte) {
 		if (asmByteMarker == ASM_SIZE) {
 			Serial.println("ASM marker detected, sending Framebuffer minus ASM size");
 			// send received buffer
-			this->frameClientListener->receiveCompleteFrame(receivedFrame, receivedNumBytes);
+			frameClientListener->receiveCompleteFrame(receivedFrame, receivedNumBytes);
 
 			// reset the asmByte and receivedFrameBuffer for the next iteration
 			asmByteMarker = 0;
@@ -64,7 +64,7 @@ void CcsdsAsmSyncer::dumpFrameBufferToSerial(int numBytes) {
 }
 
 void CcsdsAsmSyncer::regsiterForFrameOnCompletion(FrameListener* l) {
-	this->frameClientListener = l;
+	frameClientListener = l;
 }
 
 } // end namespace transport

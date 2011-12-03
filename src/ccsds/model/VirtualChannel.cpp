@@ -13,28 +13,28 @@ VirtualChannel::~VirtualChannel() {
 	// TODO Auto-generated destructor stub
 }
 
-const CcsdsFrame* VirtualChannel::processPayload(const int spacecraftId, const byte payload[], const int payloadLength,
-		const int frameCount, const int firstHeaderPointer) {
+const CcsdsFrame VirtualChannel::processPayload(const int _spacecraftId, const byte _payload[], const int _payloadLength,
+		const int _frameCount, const int _firstHeaderPointer) {
 
 	int payloadOffset = 0;
 	bool isNext;
 
-	if (VirtualChannel::isNextFrame(lastFrameCount, frameCount)) {
+	if (VirtualChannel::isNextFrame(lastFrameCount, _frameCount)) {
 		isNext = true;
 	}
 	else {
 		// we received frames out of order; payload before firstHeaderPointer must be thrown away.
-		payloadOffset = firstHeaderPointer;
+		payloadOffset = _firstHeaderPointer;
 		isNext = false;
 	}
 
-	lastFrameCount = frameCount;
+	lastFrameCount = _frameCount;
 
-	byte goodPayload[payloadLength - payloadOffset];
-	util::ArrayUtils::newByteArray(payload, payloadOffset, payloadLength, goodPayload);
+	byte goodPayload[_payloadLength - payloadOffset];
+	util::ArrayUtils::newByteArray(_payload, payloadOffset, _payloadLength, goodPayload);
 
 	long currentOnBoardTime = millis();
-	return new CcsdsFrame(spacecraftId, spacecraftId, goodPayload, payloadLength - payloadOffset, isNext,
+	return CcsdsFrame(_spacecraftId, _spacecraftId, goodPayload, _payloadLength - payloadOffset, isNext,
 			currentOnBoardTime);
 }
 

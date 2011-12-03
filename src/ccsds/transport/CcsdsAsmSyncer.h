@@ -39,7 +39,7 @@ private:
 	int asmByteMarker;
 
 	// Max frame size is 1014
-	static const unsigned int MAX_FRAME_SIZE = 1024;
+	static const unsigned int MAX_FRAME_SIZE = 64;
 
 	// The syncer will populate this frame until it discovers a marker and returns the frame.
 	byte receivedFrame[MAX_FRAME_SIZE];

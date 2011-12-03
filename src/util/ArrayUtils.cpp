@@ -24,11 +24,19 @@ void ArrayUtils::clearByteArray(byte byteArray[], int arraySize) {
 	}
 }
 
-
-void ArrayUtils::newByteArray(const byte payload[], const int payloadOffset, const int payloadLength, byte target[]) {
-	for(int i = payloadOffset; i < payloadLength; i++) {
-		target[i] = payload[i];
+void ArrayUtils::newByteArray(const byte sourceArray[], const int createFromOffset, const int arrayLength,
+		byte targetArray[]) {
+	for (int i = createFromOffset; i < arrayLength; i++) {
+		targetArray[i] = sourceArray[i];
 	}
+}
+
+void ArrayUtils::dumpArray(const byte array[], const int offset, const int elementsToDump, const BASE base) {
+	Serial.println("--------- Array Dump ---------");
+	for (int i = offset; i < elementsToDump; i++) {
+		Serial.println(array[i], base);
+	}
+	Serial.println("------------------------------");
 }
 
 } /* namespace util */

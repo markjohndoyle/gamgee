@@ -19,8 +19,8 @@ const String CcsdsFrameDecoder::VIRTUAL_CHANNEL_ID = "VirtualChannelId";
 
 using namespace model;
 
-CcsdsFrameDecoder::CcsdsFrameDecoder(const int frameLength, const boolean ocfPresent, const boolean ecfPresent) :
-		frameLengthInOctets(frameLength), payloadEnd(frameLength), OCF_PRESENT(ocfPresent), ECF_PRESENT(ecfPresent) {
+CcsdsFrameDecoder::CcsdsFrameDecoder(const int _frameLength, const boolean _ocfPresent, const boolean _ecfPresent) :
+		frameLengthInOctets(_frameLength), name("CcsdsFrameDecoder"), payloadEnd(_frameLength), OCF_PRESENT(_ocfPresent), ECF_PRESENT(_ecfPresent) {
 
 	if (ECF_PRESENT) {
 		payloadEnd = payloadEnd - ECF_LENGTH;
@@ -34,29 +34,37 @@ CcsdsFrameDecoder::CcsdsFrameDecoder(const int frameLength, const boolean ocfPre
 
 	// Create 8 VirtualChannels, accessed using their array index.
 	for (int i = 0; i < 8; i++) {
-		this->virtualChannels[i] = VirtualChannel(i);
+		virtualChannels[i] = VirtualChannel(i);
 	}
+
+	Serial.println("Constructed CcsdsFrameDecoder");
 }
 
 CcsdsFrameDecoder::~CcsdsFrameDecoder() {
 	// TODO Auto-generated destructor stub
 }
 
-const model::CcsdsFrame* CcsdsFrameDecoder::decode(byte frame[], const int frameSize) {
+const model::CcsdsFrame CcsdsFrameDecoder::decode(const byte frame[], const int frameSize) {
 	// Check for Frame Length
 	if (frameSize != frameLengthInOctets) {
-		Serial.println("[ERROR] - Corrupt frame - Length not correct");
-		return NULL;
+		String sizeStr = (String)frameSize;
+		Serial.println("Frame size = " + sizeStr);
+		Serial.println("[ERROR] - Corrupt frame - Length not correct.");
+		return model::CcsdsFrame();
+	}
+	else {
+		Serial.println("Frame size valid");
 	}
 
 	// FIXME Handle OCF and ECF
-	// FIXME add a test for OCF and ECF
 	if (OCF_PRESENT) {
+		Serial.println("OCF present");
 		byte operationalControlField[OCF_LENGTH];
 		util::ArrayUtils::newByteArray(frame, OCF_START, OCF_START + OCF_LENGTH, operationalControlField);
 	}
 
 	if (ECF_PRESENT) {
+		Serial.println("ECF present");
 		byte errorControlField[ECF_LENGTH];
 		util::ArrayUtils::newByteArray(frame, ECF_START, ECF_START + ECF_LENGTH, errorControlField);
 
@@ -75,6 +83,8 @@ const model::CcsdsFrame* CcsdsFrameDecoder::decode(byte frame[], const int frame
 	byte dataFieldStatus[2];
 
 	util::ArrayUtils::newByteArray(frame, 0, 6, primaryHeader);
+
+	util::ArrayUtils::dumpArray(primaryHeader, 0, 6, util::ArrayUtils::BASE_BYTE);
 
 	int spacecraftIdHighByte = (0x3F & primaryHeader[0]) << 4;
 	int spacecraftIdLowByte = (0xF0 & primaryHeader[1]) >> 4;

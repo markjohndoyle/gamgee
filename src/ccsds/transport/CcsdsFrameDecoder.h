@@ -25,10 +25,12 @@ class CcsdsFrameDecoder {
 
 		const int frameLengthInOctets;
 
-		CcsdsFrameDecoder(const int frameLength, const boolean ocfPresent = false, const boolean ecfPresent = false);
+		CcsdsFrameDecoder(const int _frameLength, const boolean _ocfPresent = false, const boolean _ecfPresent = false);
 		virtual ~CcsdsFrameDecoder();
 
-		const model::CcsdsFrame* decode(byte frame[], const int frameSize);
+		const model::CcsdsFrame decode(const byte frame[], const int frameSize);
+
+		String name;
 
 	private:
 		/*

@@ -10,12 +10,12 @@
 
 namespace model {
 
-CcsdsFrame::CcsdsFrame(const int spacecraftId, const int virtualChannelId, const byte payload[], const int payloadSize,
-		const boolean isNextFrame, const long timeStamp) :
-		spacecraftId(spacecraftId), virtualChannelId(virtualChannelId), isNextFrame(isNextFrame), timeStamp(0), frameSize(payloadSize) {
+CcsdsFrame::CcsdsFrame(const int spacecraftIdIn, const int virtualChannelIdIn, const byte payloadIn[], const int payloadSizeIn,
+		const boolean isNextFrameIn, const long timeStampIn) :
+		spacecraftId(spacecraftIdIn), virtualChannelId(virtualChannelIdIn), isNextFrame(isNextFrameIn), timeStamp(0), frameSize(payloadSizeIn) {
 
-	for (int i = 0; i < payloadSize; i++) {
-		this->payload[i] = payload[i];
+	for (int i = 0; i < frameSize; i++) {
+		payload[i] = payloadIn[i];
 	}
 }
 
@@ -24,8 +24,8 @@ CcsdsFrame::~CcsdsFrame() {
 }
 
 void CcsdsFrame::dumpFrame() const {
-	for (int i = 0; i < this->frameSize; i++) {
-		Serial.println(this->payload[i], HEX);
+	for (int i = 0; i < frameSize; i++) {
+		Serial.println(payload[i], HEX);
 	}
 }
 

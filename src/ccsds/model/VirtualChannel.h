@@ -27,8 +27,8 @@ class VirtualChannel {
 
 		virtual ~VirtualChannel();
 
-		const CcsdsFrame* processPayload(const int spacecraftId, const byte payload[], const int payloadLength,
-				const int frameCount, const int firstHeaderPointer);
+		const CcsdsFrame processPayload(const int _spacecraftId, const byte _payload[], const int _payloadLength,
+				const int _frameCount, const int _firstHeaderPointer);
 
 		/**
 		 * channelId getter

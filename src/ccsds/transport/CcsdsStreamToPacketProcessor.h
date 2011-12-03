@@ -18,15 +18,20 @@ namespace transport {
 class CcsdsStreamToPacketProcessor : public FrameListener {
 
 public:
+	int lengthOfFrames;
 	CcsdsStreamToPacketProcessor(int frameLength);
+
 	virtual ~CcsdsStreamToPacketProcessor();
 
 	void processByte(byte b);
 	virtual void receiveCompleteFrame(byte frame[], int sizeOfFrame);
+	const bool isDecoding() const;
+
 
 private:
-	CcsdsAsmSyncer syncer;
+	CcsdsAsmSyncer* syncer;
 	CcsdsFrameDecoder* frameDecoder;
+	bool decoding;
 
 };
 
