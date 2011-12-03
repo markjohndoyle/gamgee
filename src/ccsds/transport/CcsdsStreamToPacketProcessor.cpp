@@ -20,19 +20,19 @@ CcsdsStreamToPacketProcessor::~CcsdsStreamToPacketProcessor() {
 }
 
 void CcsdsStreamToPacketProcessor::processByte(byte b) {
-	Serial.println("Sending byte to ASM syncer");
 	syncer->processByte(b);
 }
 
 void CcsdsStreamToPacketProcessor::receiveCompleteFrame(byte frame[], int sizeOfFrame) {
 	decoding = true;
+
 	Serial.print("StreamToPacketProcessor received a complete frame of size: ");
 	Serial.println((String)sizeOfFrame);
 
 	util::ArrayUtils::dumpArray(frame, 0, sizeOfFrame, util::ArrayUtils::BASE_HEX);
 
 	const model::CcsdsFrame decodedFrame = frameDecoder->decode(frame, sizeOfFrame);
-	decodedFrame.dumpFrame();
+	util::ArrayUtils::dumpArray(decodedFrame.packet, 0, sizeOfFrame, util::ArrayUtils::BASE_HEX);
 
 	if(decodedFrame.spacecraftId != -1) {
 		String frameSize = (String)decodedFrame.frameSize;

@@ -16,16 +16,13 @@ class CcsdsFrame {
 	public:
 		const int spacecraftId;
 		const int virtualChannelId;
-		byte payload[];
+		byte packet[];
 		boolean isNextFrame;
 		long timeStamp;
 		const int frameSize;
 
 		CcsdsFrame(const int spacecraftIdIn = -1 , const int virtualChannelIdIn = 0, const byte payloadIn[] = 0, const int payloadSizeIn = 0, const boolean isNextFrameIn = false, const long timeStampIn = 0);
 		virtual ~CcsdsFrame();
-
-		void dumpFrame() const;
-
 };
 
 } /* namespace model */

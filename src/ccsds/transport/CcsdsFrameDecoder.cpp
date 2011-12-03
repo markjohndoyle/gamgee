@@ -84,7 +84,7 @@ const model::CcsdsFrame CcsdsFrameDecoder::decode(const byte frame[], const int 
 
 	util::ArrayUtils::newByteArray(frame, 0, 6, primaryHeader);
 
-	util::ArrayUtils::dumpArray(primaryHeader, 0, 6, util::ArrayUtils::BASE_BYTE);
+//	util::ArrayUtils::dumpArray(primaryHeader, 0, 6, util::ArrayUtils::BASE_HEX);
 
 	int spacecraftIdHighByte = (0x3F & primaryHeader[0]) << 4;
 	int spacecraftIdLowByte = (0xF0 & primaryHeader[1]) >> 4;

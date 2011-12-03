@@ -16,6 +16,7 @@ VirtualChannel::~VirtualChannel() {
 const CcsdsFrame VirtualChannel::processPayload(const int _spacecraftId, const byte _payload[], const int _payloadLength,
 		const int _frameCount, const int _firstHeaderPointer) {
 
+	Serial.println("Virtual channel processing payload");
 	int payloadOffset = 0;
 	bool isNext;
 
@@ -34,6 +35,7 @@ const CcsdsFrame VirtualChannel::processPayload(const int _spacecraftId, const b
 	util::ArrayUtils::newByteArray(_payload, payloadOffset, _payloadLength, goodPayload);
 
 	long currentOnBoardTime = millis();
+
 	return CcsdsFrame(_spacecraftId, _spacecraftId, goodPayload, _payloadLength - payloadOffset, isNext,
 			currentOnBoardTime);
 }
